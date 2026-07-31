@@ -1,4 +1,8 @@
-li = [1,2,3]
+li = []
 
-if 1 in li:
-    print('gg')
+
+for j in range(5):
+    for i in range(2):
+        li.append([j,i]) 
+
+print(li)

@@ -28,6 +28,7 @@ def placeChip(x):
     global colour
     global board
     
+    
     for i in range(6):
         if board[x][i] == BLACK:
             board[x][i] = colour
@@ -101,7 +102,12 @@ def reset():
 def LegalMoves():
     
     global board
+    legalMoves = []
     
-    for i in range(6):
-        if board[x][i] == BLACK:
-            board[x][i] = colour
+    for i in range(7):
+        for j in range(6):
+            if board[i][j] == BLACK:
+                legalMoves.append([i])
+                break
+
+    return legalMoves
