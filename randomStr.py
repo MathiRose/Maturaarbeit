@@ -1,5 +1,5 @@
 import random
-from environement import placeChip
+from environement import placeChip, LegalMoves
 
 def randomStr():
-    placeChip(random.randint(0,6))
+    placeChip(random.choice(LegalMoves()))

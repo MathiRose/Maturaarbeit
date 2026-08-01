@@ -1,22 +1,20 @@
 from enum import Enum
 
 
-BLACK = (0, 0, 0)
-YELLOW = (255,255,0)
-RED = (255,0,0)
+
 WINDOW_HEIGHT = 800
 WINDOW_WIDTH = 700
-colour = YELLOW
-board = [[BLACK] * 6 for _ in range(7)]
+player = 1
+board = [[0] * 6 for _ in range(7)]
 
 
 def game(str1, str2):
 
-    global colour
+    global player
     global board
     
     while True:
-        if colour == YELLOW:
+        if player == 1:
             str1()
             
         else:
@@ -25,13 +23,13 @@ def game(str1, str2):
 
 
 def placeChip(x):
-    global colour
+    global player
     global board
     
     
     for i in range(6):
-        if board[x][i] == BLACK:
-            board[x][i] = colour
+        if board[x][i] == 0:
+            board[x][i] = player
 
             if checkWin() == True:
                 Win()
@@ -41,10 +39,10 @@ def placeChip(x):
                 print('draw')
                 return
 
-            if colour == YELLOW:
-                colour=RED
+            if player == 1:
+                player=2
             else:
-                colour=YELLOW
+                player=1
             break
 
 
@@ -53,31 +51,31 @@ def checkWin():
     #check columns
     for column in board:
         for i in range(3):
-            if column[i] != BLACK and column[i:i+4].count(column[i]) == 4:
+            if column[i] != 0 and column[i:i+4].count(column[i]) == 4:
                 return True
             
     #check rows
     for i in range(4):
         for j in range(6):
-            if board[i][j] != BLACK and [board[i+k][j] for k in range(4)].count(board[i][j]) == 4:
+            if board[i][j] != 0 and [board[i+k][j] for k in range(4)].count(board[i][j]) == 4:
                 return True
             
     #check diagonals
     #up-right
     for i in range(4):
         for j in range(3):
-            if board[i][j] != BLACK and [board[i+k][j+k] for k in range(4)].count(board[i][j]) == 4:
+            if board[i][j] != 0 and [board[i+k][j+k] for k in range(4)].count(board[i][j]) == 4:
                 return True
             
     #up-left
     for i in range(4):
         for j in range(3):
-            if board[i][j] != BLACK and [board[i-k+3][j+k] for k in range(4)].count(board[i][j]) == 4:
+            if board[i][j] != 0 and [board[i-k+3][j+k] for k in range(4)].count(board[i][j]) == 4:
                 return True
 
 
 def Win():
-    if colour == YELLOW:
+    if player == 1:
         print('Yellow won')
     else:
         print('Red won')
@@ -86,17 +84,17 @@ def Win():
 
 def checkDraw():
     for col in board:
-        if BLACK in col:
+        if 0 in col:
             return
         
     return True
         
 
 def reset():
-    global colour
+    global player
     global board
-    colour = YELLOW
-    board = [[BLACK] * 6 for _ in range(7)]
+    player = 1
+    board = [[0] * 6 for _ in range(7)]
 
 
 def LegalMoves():
@@ -106,8 +104,8 @@ def LegalMoves():
     
     for i in range(7):
         for j in range(6):
-            if board[i][j] == BLACK:
-                legalMoves.append([i])
+            if board[i][j] == 0:
+                legalMoves.append(i)
                 break
 
     return legalMoves

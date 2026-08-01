@@ -8,6 +8,8 @@ import environement
 
 BLACK = (0, 0, 0)
 WHITE = (200, 200, 200)
+YELLOW = (255,255,0)
+RED = (255,0,0)
 WINDOW_HEIGHT = 800
 WINDOW_WIDTH = 700
 
@@ -27,7 +29,10 @@ def humanStr():
         SCREEN.fill(BLACK)
         drawGrid()
         drawBoard()
-        drawCircle(x,y,environement.colour)
+        if environement.player == 1:
+            drawCircle(x,y,YELLOW)
+        else:
+            drawCircle(x,y,RED)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -63,4 +68,9 @@ def drawCircle(x,y,colour):
 def drawBoard():
     for i in range(7):
         for j in range(6):
-            drawCircle(i,7-j,environement.board[i][j])
+            if environement.board[i][j] == 1:
+                drawCircle(i,7-j,YELLOW)
+            elif environement.board[i][j] == 2:
+                drawCircle(i,7-j,RED)
+
+
