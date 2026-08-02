@@ -1,6 +1,6 @@
 import random
 
-li = [1,2,3]
+li = [1,2,5,float('-inf')]
 
 
-print(random.choice(li))
+print(min(li))
