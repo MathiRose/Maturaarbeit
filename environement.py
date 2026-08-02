@@ -1,7 +1,6 @@
 from enum import Enum
 
 
-
 WINDOW_HEIGHT = 800
 WINDOW_WIDTH = 700
 player = 1
@@ -97,14 +96,13 @@ def reset():
     board = [[0] * 6 for _ in range(7)]
 
 
-def LegalMoves():
+def LegalMoves(state):
     
-    global board
     legalMoves = []
     
     for i in range(7):
         for j in range(6):
-            if board[i][j] == 0:
+            if state[i][j] == 0:
                 legalMoves.append(i)
                 break
 
