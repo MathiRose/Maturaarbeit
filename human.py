@@ -15,7 +15,7 @@ WINDOW_WIDTH = 700
 
 
 
-def humanStr():
+def humanStr(board, player):
     global SCREEN, CLOCK
     pygame.init()
     SCREEN = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -28,8 +28,8 @@ def humanStr():
     while True:
         SCREEN.fill(BLACK)
         drawGrid()
-        drawBoard()
-        if environement.player == 1:
+        drawBoard(board)
+        if player == 1:
             drawCircle(x,y,YELLOW)
         else:
             drawCircle(x,y,RED)
@@ -46,8 +46,7 @@ def humanStr():
                     if x < 6:
                         x += 1
                 if event.key == pygame.K_SPACE:
-                    environement.placeChip(x)
-                    return
+                    return environement.placeChip(x, board, player)
                     
         
         pygame.display.update()
@@ -65,12 +64,12 @@ def drawCircle(x,y,colour):
     pygame.draw.circle(SCREEN, colour, (x*100+50,y*100+50), 40)
 
 
-def drawBoard():
+def drawBoard(board):
     for i in range(7):
         for j in range(6):
-            if environement.board[i][j] == 1:
+            if board[i][j] == 1:
                 drawCircle(i,7-j,YELLOW)
-            elif environement.board[i][j] == 2:
+            elif board[i][j] == 2:
                 drawCircle(i,7-j,RED)
 
 

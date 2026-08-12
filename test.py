@@ -1,6 +1,9 @@
-import random
+def var1():
+    return 1,2
 
-li = [1,2,5,float('-inf')]
+def pr(a,b,c=0):
+    print(a,b,c)
 
 
-print(min(li))
+e,f = var1()
+pr(e,f,3)

@@ -1,5 +1,5 @@
 import random
-from environement import placeChip, LegalMoves, board
+from environement import placeChip, LegalMoves
 
-def randomStr():
-    placeChip(random.choice(LegalMoves(board)))
+def randomStr(board, player):
+    return placeChip(random.choice(LegalMoves(board)),board ,player)

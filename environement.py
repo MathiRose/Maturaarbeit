@@ -1,51 +1,50 @@
 from enum import Enum
 
 
-WINDOW_HEIGHT = 800
-WINDOW_WIDTH = 700
-player = 1
-board = [[0] * 6 for _ in range(7)]
-
 
 def game(str1, str2):
 
-    global player
-    global board
+    game = True
+    player = 1
+    board = [[0] * 6 for _ in range(7)]
     
     while True:
         if player == 1:
-            str1()
+            state = str1(board, 1)
+            if type(state) == str:
+                return [state, 1]
+            
+            board, player = state
             
         else:
-            str2()
+            state = str2(board, 2)  
+            if type(state) == str:
+                return [state, 2]
+            
+            board, player = state
 
 
 
-def placeChip(x):
-    global player
-    global board
-    
+def placeChip(x, board, player):
     
     for i in range(6):
         if board[x][i] == 0:
             board[x][i] = player
 
-            if checkWin() == True:
-                Win()
-                return
+            if checkWin(board) == True:
+                return 'win'
             
-            if checkDraw() == True:
-                print('draw')
-                return
+            if checkDraw(board) == True:
+                return 'draw'
 
             if player == 1:
-                player=2
+                return board, 2
             else:
-                player=1
-            break
+                return board, 1
+            
 
 
-def checkWin():
+def checkWin(board):
 
     #check columns
     for column in board:
@@ -71,38 +70,24 @@ def checkWin():
         for j in range(3):
             if board[i][j] != 0 and [board[i-k+3][j+k] for k in range(4)].count(board[i][j]) == 4:
                 return True
-
-
-def Win():
-    if player == 1:
-        print('Yellow won')
-    else:
-        print('Red won')
-    reset()
     
 
-def checkDraw():
+
+def checkDraw(board):
     for col in board:
         if 0 in col:
-            return
+            return False
         
     return True
         
 
-def reset():
-    global player
-    global board
-    player = 1
-    board = [[0] * 6 for _ in range(7)]
-
-
-def LegalMoves(state):
+def LegalMoves(board):
     
     legalMoves = []
     
     for i in range(7):
         for j in range(6):
-            if state[i][j] == 0:
+            if board[i][j] == 0:
                 legalMoves.append(i)
                 break
 
