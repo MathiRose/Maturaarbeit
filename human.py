@@ -46,9 +46,9 @@ def humanStr(board, player):
                     if x < 6:
                         x += 1
                 if event.key == pygame.K_SPACE:
-                    return environement.placeChip(x, board, player)
-                    
-        
+                    if x in environement.LegalMoves(board):
+                        return environement.placeChip(x, board, player)
+
         pygame.display.update()
    
     

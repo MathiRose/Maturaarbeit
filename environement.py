@@ -26,21 +26,23 @@ def game(str1, str2):
 
 
 def placeChip(x, board, player):
+
+    new_board = [row.copy() for row in board] #else the board variable gets edited directly
     
     for i in range(6):
-        if board[x][i] == 0:
-            board[x][i] = player
+        if new_board[x][i] == 0:
+            new_board[x][i] = player
 
-            if checkWin(board) == True:
+            if checkWin(new_board) == True:
                 return 'win'
             
-            if checkDraw(board) == True:
+            if checkDraw(new_board) == True:
                 return 'draw'
 
             if player == 1:
-                return board, 2
+                return new_board, 2
             else:
-                return board, 1
+                return new_board, 1
             
 
 
