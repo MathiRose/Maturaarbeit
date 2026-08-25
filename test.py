@@ -1,4 +1,4 @@
-def var1():
+"""def var1():
     return 1,2
 
 def pr(a,b=0,c=0):
@@ -11,4 +11,6 @@ e,f = var1()
 
 
 if 5 in list(range(5)):
-    print(list(range(5)))
+    print(list(range(5)))"""""
+
+print([1,2,3,4]/[2,3,4,5])

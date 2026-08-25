@@ -116,7 +116,7 @@ def checkWin():
     #up-left
     for i in range(4):
         for j in range(3):
-            if board[i][j] != BLACK and [board[i-k+3][j+k] for k in range(4)].count(board[i][j]) == 4:
+            if board[i+3][j] != BLACK and [board[i-k+3][j+k] for k in range(4)].count(board[i+3][j]) == 4:
                 return True
 
 

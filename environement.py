@@ -27,7 +27,7 @@ def game(str1, str2):
 
 def placeChip(x, board, player):
 
-    new_board = [row.copy() for row in board] #else the board variable gets edited directly
+    new_board = [column.copy() for column in board] #else the board variable gets edited directly
     
     for i in range(6):
         if new_board[x][i] == 0:
@@ -70,7 +70,7 @@ def checkWin(board):
     #up-left
     for i in range(4):
         for j in range(3):
-            if board[i][j] != 0 and [board[i-k+3][j+k] for k in range(4)].count(board[i][j]) == 4:
+            if board[i+3][j] != 0 and [board[i-k+3][j+k] for k in range(4)].count(board[i+3][j]) == 4:
                 return True
     
 

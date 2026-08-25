@@ -3,7 +3,7 @@ from randomStr import randomStr
 from human import humanStr
 from Minimax import MinimaxStr
 
-result = game(humanStr, humanStr)
+result = game(humanStr, MinimaxStr)
 
 if result[0] == 'win':
     print(f'Player {result[1]} won')
