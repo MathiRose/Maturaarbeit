@@ -13,4 +13,5 @@ e,f = var1()
 if 5 in list(range(5)):
     print(list(range(5)))"""""
 
-print([1,2,3,4]/[2,3,4,5])
+for i in [2,1,3]:
+    print(i)

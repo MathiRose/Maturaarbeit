@@ -1,9 +1,9 @@
 from environement import placeChip, LegalMoves
 
 
-def MinimaxStr(board, player, depth = 1):
+def MinimaxStr(board, player, depth = 5):
     bestMove = float('-inf')
-    x = 0
+    x = LegalMoves(board)[0]
     for i in LegalMoves(board):
         new_state = placeChip(i, board, player)
         if type(new_state) == str:
@@ -15,7 +15,7 @@ def MinimaxStr(board, player, depth = 1):
         else:
             value = -Minimax(*new_state, depth)
 
-        if value >= bestMove:
+        if value > bestMove:
             bestMove = value
             x = i
 
@@ -148,13 +148,3 @@ def countOpenRows(board, player, length): #berechnet eigene - gegnerische offene
                         value -= 1
 
     return value
-
-"""
-print(countOpenRows([[1, 1, 1, 1, 1, 1], 
-                  [0, 0, 0, 0, 0, 0], 
-                  [0, 0, 0, 0, 0, 0],
-                  [0, 0, 0, 0, 0, 0], 
-                  [0, 0, 0, 0, 0, 0], 
-                  [0, 0, 0, 0, 0, 0], 
-                  [0, 0, 0, 0, 0, 0]],1,2))
-"""

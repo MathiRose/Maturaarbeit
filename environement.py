@@ -87,7 +87,7 @@ def LegalMoves(board):
     
     legalMoves = []
     
-    for i in range(7):
+    for i in [3,2,4,1,5,0,6]: #prioratizes center moves, because they are probably better
         for j in range(6):
             if board[i][j] == 0:
                 legalMoves.append(i)

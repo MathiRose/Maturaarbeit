@@ -1,7 +1,9 @@
 from randomStr import randomStr
 from human import humanStr
 from Minimax import MinimaxStr
+from QLearning import QLearningStr, QTrained, QTable, Exploration
 import time
+import pickle
 
 def play(str1, str2, games = 100):
 
@@ -60,5 +62,18 @@ def timed_game(str1, str2):
             
             board, player = state
 
+
+"""
+print(play(randomStr, QLearningStr, 10000))
+print(play(randomStr, QLearningStr, 10000))
+print(play(randomStr, QLearningStr, 10000))
+print(play(randomStr, QLearningStr, 10000))
+print(play(randomStr, QLearningStr, 10000))
+print(play(randomStr, QLearningStr, 10000))
+
+with open("QTable.pkl", "wb") as file:
+    pickle.dump(QTable, file)
+
+"""
 
 print(play(randomStr, MinimaxStr, 100))
