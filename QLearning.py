@@ -1,18 +1,11 @@
 from environement import placeChip, LegalMoves, game
+from randomStr import randomStr
 import random
 
 QTable = {}  # Initialize an empty Q-table
 DiscountFactor = -0.95 #negative because the next state is the opponents turn
 Lernrate = 0.1
 Exploration = 0.3
-
-
-"""
-import pickle
-
-with open("QTable.pkl", "rb") as file:
-    QTable = pickle.load(file)
-"""
 
 
 def QTrained(board, player):
@@ -33,9 +26,12 @@ def QLearningExploration(board, player):
 
 
 def QMove(action, board, player):
-    b = cannonicalBoard(board)
-    state =  placeChip(action, board, player)
-    s = State(b, player)
+
+    state = placeChip(action, board, player)
+
+    print(state)
+
+    s = State(cannonicalBoard(board), player)
     initializeQTable(s, action)
     
     if type(state) == str:
@@ -55,9 +51,14 @@ def QMove(action, board, player):
 
 
 def Q(state, action):
-    s = State(cannonicalBoard(state[0]), state[1])
-    initializeQTable(s, action)
-    return QTable[s][action]
+    b = cannonicalBoard(state[0])
+    s = State(b, state[1])
+    if b == state[0]:
+        initializeQTable(s, action)
+        return QTable[s][action]
+    else:
+        initializeQTable(s, 6-action)
+        return QTable[s][6-action]
 
 
 def initializeQTable(state, action):
@@ -67,7 +68,7 @@ def initializeQTable(state, action):
         QTable[state] = {}
 
     if action not in QTable[state]:
-        QTable[state][action] = 0
+        QTable[state][action] = random.random()  # Initialize with a random float 0.0 <= X < 1.0
 
 
 def State(board, player): #lists can't be contained in dictionary keys, so I need to convert the board into a tuple
@@ -90,3 +91,30 @@ def train(games = 10000):
         game(QLearningStr, QLearningStr)
 
 
+"""
+Board = cannonicalBoard([[0, 0, 0, 0, 0, 0], 
+                        [0, 0, 0, 0, 0, 0], 
+                        [0, 0, 0, 0, 0, 0], 
+                        [0, 0, 0, 0, 0, 0], 
+                        [1, 0, 0, 0, 0, 0], 
+                        [0, 0, 0, 0, 0, 0], 
+                        [0, 0, 0, 0, 0, 0]])
+
+player = 2
+state = State(Board, player)
+action = 3
+
+initializeQTable(state, action)
+QTable[state][action] = 5
+Moved1 = QMove(action, Board, player)
+QTable[State(*Moved1)][action] = 10000
+Moved2 = QMove(action, Board, player)
+Moved3 = QMove(action, *Moved2)
+
+print(Q(state, action))
+print(Q(Moved1, action))
+print(Q(Moved2, action))
+print(Q(Moved3, action))
+print(QTable)
+print(Moved3)
+"""

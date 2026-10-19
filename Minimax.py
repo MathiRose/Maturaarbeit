@@ -1,7 +1,8 @@
 from environement import placeChip, LegalMoves
 
+d = 5
 
-def MinimaxStr(board, player, depth = 5):
+def MinimaxStr(board, player, depth = d):
     bestMove = float('-inf')
     x = LegalMoves(board)[0]
     for i in LegalMoves(board):
@@ -22,14 +23,13 @@ def MinimaxStr(board, player, depth = 5):
     return placeChip(x, board, player)
 
 
-def Minimax(board, player, depth):
-
-    legalMoves = LegalMoves(board)
-    bestMove = float('-inf')
+def Minimax(board, player, depth, alpha = float('-inf'), beta = float('inf')): 
 
     if depth == 0:
         return Value(board, player)
-
+    
+    legalMoves = LegalMoves(board)
+    bestMove = float('-inf')
 
     for i in legalMoves:
         new_state = placeChip(i, board, player)
@@ -39,7 +39,11 @@ def Minimax(board, player, depth):
             else:
                 bestMove = max(bestMove,0)
 
-        bestMove = max(bestMove, -Minimax(*new_state, depth - 1))
+        bestMove = max(bestMove, -Minimax(*new_state, depth - 1, -beta, -alpha))
+
+        alpha = max(alpha, bestMove)
+        if alpha >= beta:
+            break
 
     return bestMove
 
@@ -53,53 +57,6 @@ def Value(board, player):
 
     value += countOpenRows(board, player, 2) * 1
     return value
-
-
-"""
-def countRows(board, player, length): #berechnet eigene - gegnerische Reihen
-
-    value = 0
-
-    #check columns
-    for column in board:
-        for i in range(7 - length):
-            if column[i] != 0 and column[i:i+length].count(column[i]) == length:
-                if player == column[i]:
-                    value += 1
-                else:
-                    value -= 1
-
-    #check rows
-    for i in range(8 - length):
-        for j in range(6):
-            if board[i][j] != 0 and [board[i+k][j] for k in range(length)].count(board[i][j]) == length:
-                if player == board[i][j]:
-                    value += 1
-                else:
-                    value -= 1
-
-    #check diagonals
-    #up-right
-    for i in range(8 - length):
-        for j in range(7 - length):
-            if board[i][j] != 0 and [board[i+k][j+k] for k in range(length)].count(board[i][j]) == length:
-                if player == board[i][j]:
-                     value += 1
-                else:
-                    value -= 1
-
-    #up-left
-    for i in range(8 - length):
-        for j in range(7 - length):
-            if board[i+length-1][j] != 0 and [board[i-k+length-1][j+k] for k in range(length)].count(board[i+length-1][j]) == length:
-                if player == board[i+length-1][j]:
-                    value += 1
-                else:
-                    value -= 1
-
-    return value
-"""
-
 
 
 def countOpenRows(board, player, length): #berechnet eigene - gegnerische offene Reihen

@@ -5,14 +5,12 @@ from enum import Enum
 import environement
 
 
-
 BLACK = (0, 0, 0)
 WHITE = (200, 200, 200)
 YELLOW = (255,255,0)
 RED = (255,0,0)
 WINDOW_HEIGHT = 800
 WINDOW_WIDTH = 700
-
 
 
 def humanStr(board, player):

@@ -1,7 +1,6 @@
 from enum import Enum
 
 
-
 def game(str1, str2):
 
     game = True
@@ -24,7 +23,6 @@ def game(str1, str2):
             board, player = state
 
 
-
 def placeChip(x, board, player):
 
     new_board = [column.copy() for column in board] #else the board variable gets edited directly
@@ -44,7 +42,6 @@ def placeChip(x, board, player):
             else:
                 return new_board, 1
             
-
 
 def checkWin(board):
 
@@ -73,7 +70,6 @@ def checkWin(board):
             if board[i+3][j] != 0 and [board[i-k+3][j+k] for k in range(4)].count(board[i+3][j]) == 4:
                 return True
     
-
 
 def checkDraw(board):
     for col in board:
