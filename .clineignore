@@ -1,0 +1,88 @@
+# .clineignore
+# Files and folders listed here are hidden from Cline (Cline will not read,
+# search or send them to the model). Syntax is the same as .gitignore.
+# Keeping these out saves context and avoids sending machine-specific or
+# binary files to the model.
+
+# ---------------------------------------------------------------------------
+# Python virtual environments
+# ---------------------------------------------------------------------------
+.venv/
+.venvL/
+venv/
+env/
+ENV/
+
+# ---------------------------------------------------------------------------
+# Python caches and compiled bytecode
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.ipynb_checkpoints/
+
+# ---------------------------------------------------------------------------
+# Trained models and serialized data (binary, not useful as context)
+# ---------------------------------------------------------------------------
+*.pkl
+*.pickle
+*.joblib
+*.pt
+*.pth
+*.onnx
+*.h5
+*.npz
+*.npy
+
+# ---------------------------------------------------------------------------
+# Training runs, logs and generated results
+# ---------------------------------------------------------------------------
+*.log
+logs/
+runs/
+outputs/
+results/
+checkpoints/
+
+# ---------------------------------------------------------------------------
+# Generated plots / figures
+# ---------------------------------------------------------------------------
+figures/
+*.svg
+
+# ---------------------------------------------------------------------------
+# Packaging and distribution artifacts
+# ---------------------------------------------------------------------------
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ---------------------------------------------------------------------------
+# Coverage and test reports
+# ---------------------------------------------------------------------------
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# ---------------------------------------------------------------------------
+# Editor and OS files
+# ---------------------------------------------------------------------------
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+
+# ---------------------------------------------------------------------------
+# Local secrets / environment configuration
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
