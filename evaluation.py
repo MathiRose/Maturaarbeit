@@ -63,4 +63,4 @@ def timed_game(str1, str2):
             
             board, player = state
 
-play(QLearningStr, randomStr, 1)
+#play(QLearningStr, randomStr, 1)

@@ -18,11 +18,11 @@ game_1 = play(randomStr, QTrained, 500)
 game_2 = play(QTrained, randomStr, 500)
 Gewinnraten.append((game_1[1]+game_2[0])/10)
 
-for i in range(30):
-    train(20000)
-    game_1 = play(randomStr, QTrained, 500)
-    game_2 = play(QTrained, randomStr, 500)
-    Gewinnraten.append((game_1[1]+game_2[0])/10)
+for i in range(20):
+    train(10000)
+    game_1 = play(randomStr, QTrained, 300)
+    game_2 = play(QTrained, randomStr, 300)
+    Gewinnraten.append((game_1[1]+game_2[0])/6)
 
 plt.plot(range(0, len(Gewinnraten)*20000, 20000), Gewinnraten)
 plt.xlabel("Trainingsepisoden")

@@ -29,36 +29,31 @@ def QMove(action, board, player):
 
     state = placeChip(action, board, player)
 
-    print(state)
-
-    s = State(cannonicalBoard(board), player)
-    initializeQTable(s, action)
+    canonicalBoard, canonicalAction = Canonicalize(board, action)
+    s = State(canonicalBoard, player)
+    initializeQTable(s, canonicalAction)
     
     if type(state) == str:
         if state == 'win':
-            QTable[s][action] = 100
+            QTable[s][canonicalAction] = 100
         else:
-            QTable[s][action] = 0
+            QTable[s][canonicalAction] = 0
             
     else:
         QObserved = (DiscountFactor * max([Q(state,a) for a in LegalMoves(state[0])])) #Bellman Equation - Reward is 0 except for win (which is handled above)
     
-        TD_Error = QObserved - QTable[s][action]
+        TD_Error = QObserved - QTable[s][canonicalAction]
     
-        QTable[s][action] += Lernrate * TD_Error
+        QTable[s][canonicalAction] += Lernrate * TD_Error
         
     return state
 
 
 def Q(state, action):
-    b = cannonicalBoard(state[0])
+    b, canonicalAction = Canonicalize(state[0], action)
     s = State(b, state[1])
-    if b == state[0]:
-        initializeQTable(s, action)
-        return QTable[s][action]
-    else:
-        initializeQTable(s, 6-action)
-        return QTable[s][6-action]
+    initializeQTable(s, canonicalAction)
+    return QTable[s][canonicalAction]
 
 
 def initializeQTable(state, action):
@@ -77,6 +72,14 @@ def State(board, player): #lists can't be contained in dictionary keys, so I nee
 
 def MirrorBoard(board):
     return board[::-1] #mirrors the board
+
+
+def Canonicalize(board, action): #maps a board and action onto the canonical (mirrored) representation
+    canonicalBoard = cannonicalBoard(board)
+    if canonicalBoard == board:
+        return canonicalBoard, action
+    else:
+        return canonicalBoard, 6-action
 
 
 def cannonicalBoard(board): 
