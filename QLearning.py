@@ -1,23 +1,38 @@
 from environement import placeChip, LegalMoves, game
 from randomStr import randomStr
 import random
+import pickle
 
 QTable = {}  # Initialize an empty Q-table
-DiscountFactor = -0.95 #negative because the next state is the opponents turn
+DiscountFactor = -0.95 #negative because the next state is the opponents turn (negamax: Q = -gamma * max Q(opponent))
 Lernrate = 0.1
+#MinLernrate = 0.01
 Exploration = 0.3
+MinExploration = 0.01
+DecayEpisoden = 150000 #after this many training games the learning rate and the exploration have reached their minimum
+#SelbstspielAnteil = 0.5 #share of training games that are played against itself, the rest is played against randomStr ()
+TrainierteSpiele = 0
+
+
+
+def AktuelleExploration(): #exploration decays over time, so the QLearning can settle on the best moves instead of exploring forever
+    return max(MinExploration, Exploration * (1 - TrainierteSpiele / DecayEpisoden))
+
+
+def BesteAktion(board, player): 
+    return max([(Q((board, player), a), a) for a in LegalMoves(board)])[1] #max with tuple as input returns tuple with highest first value
 
 
 def QTrained(board, player):
-    return placeChip(max([(Q((board, player), a), a) for a in LegalMoves(board)])[1], board, player) #max with tuple as input returns tuple with highest first value
+    return placeChip(BesteAktion(board, player), board, player)
 
 
 def QLearningStr(board, player):
     randomValue = random.random()
-    if randomValue < Exploration:
+    if randomValue < AktuelleExploration():
         return QLearningExploration(board, player)
     else:
-        return QMove(max([(Q((board, player), a), a) for a in LegalMoves(board)])[1], board, player) #max with tuple as input returns tuple with highest first value
+        return QMove(BesteAktion(board, player), board, player)
 
 
 def QLearningExploration(board, player):
@@ -57,8 +72,6 @@ def Q(state, action):
 
 
 def initializeQTable(state, action):
-    global QTable
-
     if state not in QTable:
         QTable[state] = {}
 
@@ -82,16 +95,35 @@ def Canonicalize(board, action): #maps a board and action onto the canonical (mi
         return canonicalBoard, 6-action
 
 
-def cannonicalBoard(board): 
-    if str(board) > str(MirrorBoard(board)): #if player 1 has more chips on the board than player 2, mirror the board
+def cannonicalBoard(board): #of the two mirror images the lexicographically smaller one is used, so that both give the same state
+    if str(board) > str(MirrorBoard(board)):
         return MirrorBoard(board)
     else:
         return board
 
 
 def train(games = 10000):
-    for i in range(games):        #play games between the two strategies
+    global TrainierteSpiele
+
+    for i in range(games): #play games againtst itself
         game(QLearningStr, QLearningStr)
+        TrainierteSpiele += 1
+
+def saveQTable(path = "QTable.pkl"): #save QTable for later
+    global QTable, TrainierteSpiele
+
+    with open(path, "wb") as file:
+        pickle.dump({"QTable": QTable, "TrainierteSpiele": TrainierteSpiele}, file)
+
+
+def loadQTable(path = "QTable.pkl"): #import QTable file
+    global QTable, TrainierteSpiele
+
+    with open(path, "rb") as file:
+        data = pickle.load(file)
+
+        QTable = data["QTable"]
+        TrainierteSpiele = data["TrainierteSpiele"]
 
 
 """
