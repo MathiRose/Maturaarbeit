@@ -3,7 +3,6 @@ from enum import Enum
 
 def game(str1, str2):
 
-    game = True
     player = 1
     board = [[0] * 6 for _ in range(7)]
     
