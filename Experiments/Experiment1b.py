@@ -29,7 +29,7 @@ def Gewinnrate():
     return rate, zeit
 
 
-rate, zeit, fehler = Gewinnrate()
+rate, zeit = Gewinnrate()
 Gewinnraten.append(rate)
 print(f"nach 0 Trainingsepisoden: {rate:.1f}% ({zeit:.2f} ms pro Zug)", flush=True) #:.xf rounds to x decimal places
 
@@ -39,7 +39,7 @@ for i in range(TrainingsSchritte):
     Gewinnraten.append(rate)
     print(f"nach {(i+1) * EpisodenProSchritt:,} ".replace(",", "'"), f"Trainingsepisoden: {rate:.1f}% ({zeit:.2f} ms pro Zug)", flush=True)
 
-plt.plot(range(0, TrainingsSchritte * EpisodenProSchritt, EpisodenProSchritt), Gewinnraten)
+plt.plot(range(0, (TrainingsSchritte+1) * EpisodenProSchritt, EpisodenProSchritt), Gewinnraten)
 plt.xlabel("Trainingsepisoden")
 plt.ylabel("Gewinnrate in %")
 plt.title("Entwicklung der Gewinnrate")

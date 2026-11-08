@@ -1,7 +1,7 @@
-from random import random
 from evaluation import play
 from environement import LegalMoves, placeChip, game
 from QLearning import QLearningStr, QTrained
+import random 
 
 seed = input("Gib einen seed für den zufälligen Zahlengenerator ein (oder lasse leer für zufällig): ")
 if seed:

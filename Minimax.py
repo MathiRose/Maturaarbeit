@@ -36,10 +36,10 @@ def Minimax(board, player, depth, alpha = float('-inf'), beta = float('inf')):
         if type(new_state) == str:
             if new_state == 'win':
                 return float('inf')
-            else:
-                bestMove = max(bestMove,0)
-
-        bestMove = max(bestMove, -Minimax(*new_state, depth - 1, -beta, -alpha))
+            else: #draw
+                bestMove = max(bestMove,0) 
+        else:   #new_state is a string, so it can't be unpacked into Minimax()
+            bestMove = max(bestMove, -Minimax(*new_state, depth - 1, -beta, -alpha))
 
         alpha = max(alpha, bestMove)
         if alpha >= beta:
@@ -105,3 +105,11 @@ def countOpenRows(board, player, length): #berechnet eigene - gegnerische offene
                         value -= 1
 
     return value
+
+
+def MinimaxMitTiefe(tiefe):
+    #MinimaxStr hat die Suchtiefe als optionalen Parameter, evaluation.play übergibt aber nur (board, player)
+    def Strategie(board, player):   
+        return MinimaxStr(board, player, tiefe)
+    return Strategie
+

@@ -22,6 +22,7 @@ def humanStr(board, player):
 
     x = 3
     y = 0
+    played = False
     
     while True:
         SCREEN.fill(BLACK)
@@ -31,6 +32,12 @@ def humanStr(board, player):
             drawCircle(x,y,YELLOW)
         else:
             drawCircle(x,y,RED)
+            
+        pygame.display.update()
+
+        if played == True:
+            return board, player
+
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -45,9 +52,9 @@ def humanStr(board, player):
                         x += 1
                 if event.key == pygame.K_SPACE:
                     if x in environement.LegalMoves(board):
-                        return environement.placeChip(x, board, player)
+                        played = True
+                        board, player = environement.placeChip(x, board, player)
 
-        pygame.display.update()
    
     
 def drawGrid():

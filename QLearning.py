@@ -6,11 +6,9 @@ import pickle
 QTable = {}  # Initialize an empty Q-table
 DiscountFactor = -0.95 #negative because the next state is the opponents turn (negamax: Q = -gamma * max Q(opponent))
 Lernrate = 0.1
-#MinLernrate = 0.01
 Exploration = 0.3
 MinExploration = 0.01
 DecayEpisoden = 150000 #after this many training games the learning rate and the exploration have reached their minimum
-#SelbstspielAnteil = 0.5 #share of training games that are played against itself, the rest is played against randomStr ()
 TrainierteSpiele = 0
 
 
@@ -126,30 +124,3 @@ def loadQTable(path = "QTable.pkl"): #import QTable file
         TrainierteSpiele = data["TrainierteSpiele"]
 
 
-"""
-Board = cannonicalBoard([[0, 0, 0, 0, 0, 0], 
-                        [0, 0, 0, 0, 0, 0], 
-                        [0, 0, 0, 0, 0, 0], 
-                        [0, 0, 0, 0, 0, 0], 
-                        [1, 0, 0, 0, 0, 0], 
-                        [0, 0, 0, 0, 0, 0], 
-                        [0, 0, 0, 0, 0, 0]])
-
-player = 2
-state = State(Board, player)
-action = 3
-
-initializeQTable(state, action)
-QTable[state][action] = 5
-Moved1 = QMove(action, Board, player)
-QTable[State(*Moved1)][action] = 10000
-Moved2 = QMove(action, Board, player)
-Moved3 = QMove(action, *Moved2)
-
-print(Q(state, action))
-print(Q(Moved1, action))
-print(Q(Moved2, action))
-print(Q(Moved3, action))
-print(QTable)
-print(Moved3)
-"""
